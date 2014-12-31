@@ -5,7 +5,8 @@ angular.module('scoolbryWelcomeApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'timer'
 ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

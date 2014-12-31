@@ -5,7 +5,7 @@ div(ng-include='"components/navbar/navbar.html"')
     form.form-horizontal(name='authentication')
       h1.text-center Please scan your card
 
-      input.form-control(type='text', name='id', required, ng-model='barcodeID', autofocus)
+      input.form-control(type='text', name='id', required, ng-model='barcodeID', autofocus, on-focus)
       button.btn.btn-success(type='submit', ng-click='sendBarcode()', ng-disabled='authentication.$invalid') Submit
 
 
