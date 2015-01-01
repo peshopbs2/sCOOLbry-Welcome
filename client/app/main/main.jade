@@ -1,6 +1,6 @@
 toaster-container(toaster-options='{"position-class": "toast-top-full-width"}')
 
-.jumbotron.vcenter(ng-class='{ "inverse": !libraryID }')
+.jumbotron.vcenter(ng-class='{ "inverse": !libraryID, "default": libraryID}')
   .container
     div(ng-if='libraryID')
       h1.text-center Welcome to our Library!
@@ -10,8 +10,7 @@ toaster-container(toaster-options='{"position-class": "toast-top-full-width"}')
       h1.text-center Please set your Library ID!
       h2.text-center.text-info The library owner has to scan his/her Barcode ID Card
 
-    form.form-horizontal(name='authentication')
-
-      input.form-control(type='text', name='id', required, ng-model='barcodeID', autofocus, on-focus)
-      button.btn.btn-success(type='submit', ng-if='libraryID', ng-click='sendBarcode()', ng-disabled='authentication.$invalid') Submit
-      button.btn.btn-success(type='submit', ng-if='!libraryID', ng-click='getLibraryID()', ng-disabled='authentication.$invalid') Submit
+form.form-horizontal(name='authentication')#authentication
+  input.form-control(type='text', name='id', id='barcodeID', required, ng-model='barcodeID', autofocus, autocomplete='off', on-focus)
+  button.btn.btn-success(type='submit', ng-if='libraryID', ng-click='sendBarcode()', ng-disabled='authentication.$invalid') Submit
+  button.btn.btn-success(type='submit', ng-if='!libraryID', ng-click='getLibraryID()', ng-disabled='authentication.$invalid') Submit

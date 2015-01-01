@@ -10,7 +10,6 @@ angular.module('scoolbryWelcomeApp')
     var connectionCounter = 0;
 
     $scope.$watch('online', function(newStatus) {
-      console.log(newStatus);
       if(newStatus) {
         if(connectionCounter>0) {
           toaster.clear();
@@ -18,6 +17,7 @@ angular.module('scoolbryWelcomeApp')
         }
         $scope.authentication.id.$setValidity('online', true);
       } else {
+        toaster.clear();
         toaster.pop('error', 'Offline', 'No Internet connection!', 0);
         $scope.authentication.id.$setValidity('online', false);
       }
@@ -27,13 +27,20 @@ angular.module('scoolbryWelcomeApp')
     // Get library ID if not configured
     $scope.getLibraryID = function() {
       var url = 'http://www.scoolbry.com/api/library/getLibraryID/' + $scope.barcodeID;
+      
+      toaster.clear();
+      toaster.pop('info', 'Loading...');
       $http.get(url).
       success(function(id) {
         $cookieStore.put('libraryID', id);
+
+        toaster.clear();
         toaster.pop('success', 'Library ID set successfully', 'Refreshing in 5 seconds.');
+
         $timeout($route.reload, 5000);
       }).
       error(function(error, status) {
+        toaster.clear();
         toaster.pop('error', 'Error code: ' + status, error);
       });
     };
@@ -42,6 +49,9 @@ angular.module('scoolbryWelcomeApp')
   $scope.sendBarcode = function() {
 
     var url = 'http://www.scoolbry.com/api/library/pending/' + $scope.libraryID + '/' + $scope.barcodeID;
+
+    toaster.clear();    
+    toaster.pop('info', 'Loading...');
     $http.get(url).
     success(function(pendings) {
       if(pendings.length===0) {
@@ -50,13 +60,14 @@ angular.module('scoolbryWelcomeApp')
         newPendingData.barcode = $scope.barcodeID;
 
         pendings.push(newPendingData);
-      } else {
-        pendings[0].barcode = $scope.barcodeID;
       }
+      pendings[0].barcode = $scope.barcodeID;
       userPending.set(pendings);
       $location.path('/pending');
     }).
     error(function(error, status) {
+      toaster.clear();
+      angular.element('#barcodeID').select();
       if(status===0) {
         toaster.pop('error', 'Error code: 503', 'Service temporarily unavailable. Try again later.');
       } else {

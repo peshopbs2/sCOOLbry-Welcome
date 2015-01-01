@@ -12,7 +12,7 @@ angular.module('scoolbryWelcomeApp')
       $route.reload();
     };
 
-    if($scope.pendings.length<1) {
+    if($scope.pendings.length===0) {
       returnToHomepage();
     } else {
       $timeout(returnToHomepage, 60000);
@@ -23,7 +23,6 @@ angular.module('scoolbryWelcomeApp')
     var connectionCounter = 0;
 
     $scope.$watch('online', function(newStatus) {
-      console.log(newStatus);
       if(newStatus) {
         if(connectionCounter>0) {
           toaster.clear();
@@ -88,15 +87,32 @@ angular.module('scoolbryWelcomeApp')
       $route.reload();
     } else {
       var url = 'http://www.scoolbry.com/api/library/pending/' + $scope.libraryID + '/' + $scope.barcodeID;
+      
+      toaster.clear();
+      toaster.pop('info', 'Loading...');   
+      
       $http.get(url).
-      success(function(pending) {
-        pending[0].barcode = $scope.barcodeID;
-        userPending.set(pending);
+      success(function(pendings) {
+        if(pendings.length===0) {
+          var newPendingData = ({});
+          newPendingData.type = 'other';
+          newPendingData.barcode = $scope.barcodeID;
+
+          pendings.push(newPendingData);
+        }
+        pendings[0].barcode = $scope.barcodeID;
+        userPending.set(pendings);
         $location.path('/pending');
         $route.reload();
       }).
       error(function(error, status) {
-        toaster.pop('error', 'Error code: ' + status, error);
+        angular.element('#barcodeID').select();
+        toaster.clear();
+        if(status===0) {
+          toaster.pop('error', 'Error code: 503', 'Service temporarily unavailable. Try again later.');
+        } else {
+          toaster.pop('error', 'Error code: ' + status, error);
+        }
       });
     }
   };

@@ -2,8 +2,7 @@ toaster-container(toaster-options='{"position-class": "toast-top-full-width"}')
 
 .jumbotron(ng-class="{ 'vcenter': (bookings.length===0 && readings.length===0) }")
   .container
-    h1(ng-if='bookings.length>0 || readings.length>0').text-center Your current interactions
-    h1(ng-if='bookings.length===0 && readings.length===0').text-center Authentication successful
+    h1.text-center Authentication successful
     h3.text-center Scan your card again to return to homepage. You will be returned automatically in 
       timer.text-info(countdown='60', interval='1000', max-time-unit="'second'")
         | {{seconds}} seconds.
@@ -41,7 +40,7 @@ div.col-xs-5(ng-if='readings.length>0', ng-class="{ 'col-xs-offset-3': bookings.
         span.text-info.pull-right Publisher:&nbsp;
         span(ng-show='!!reading.description', style='padding:0').col-xs-8.text-justify {{ reading.description | limitTo: 500}} ...
 
-form.form-horizontal.col-xs-12(name='authentication')
+form.form-horizontal.col-xs-12(name='authentication')#authentication
 
-  input.form-control(type='text', name='id', required, ng-model='barcodeID', autofocus, on-focus)
+  input.form-control(type='text', name='id', id='barcodeID', required, ng-model='barcodeID', autofocus, on-focus, autocomplete='off')
   button.btn.btn-success(type='submit', ng-click='sendBarcode()', ng-disabled='authentication.$invalid') Submit
