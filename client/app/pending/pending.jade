@@ -1,10 +1,13 @@
-.jumbotron
+toaster-container(toaster-options='{"position-class": "toast-top-full-width"}')
+
+.jumbotron(ng-class="{ 'vcenter': (bookings.length===0 && readings.length===0) }")
   .container
-    h1.text-center Welcome to our library
-    h3.text-center You will be returned to the homepage in 
+    h1(ng-if='bookings.length>0 || readings.length>0').text-center Your current interactions
+    h1(ng-if='bookings.length===0 && readings.length===0').text-center Authentication successful
+    h3.text-center Scan your card again to return to homepage. You will be returned automatically in 
       timer.text-info(countdown='60', interval='1000', max-time-unit="'second'")
-        | {{seconds}} seconds left
-div.col-xs-5.col-xs-offset-1
+        | {{seconds}} seconds.
+div.col-xs-5(ng-if='bookings.length>0', ng-class="{ 'col-xs-offset-3': readings.length===0, 'col-xs-offset-1': readings.length>0}")
   h1.text-center.text-info Bookings
   p
 
@@ -22,7 +25,7 @@ div.col-xs-5.col-xs-offset-1
         span(ng-show='!!booking.description', style='padding:0').col-xs-8.text-justify {{ pending.book.description | limitTo: 500}} ...
 
 
-div.col-xs-5
+div.col-xs-5(ng-if='readings.length>0', ng-class="{ 'col-xs-offset-3': bookings.length===0}")
   h1.text-center.text-info Readings
   p
 

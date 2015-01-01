@@ -1,17 +1,17 @@
-div(ng-include='"components/navbar/navbar.html"')
+toaster-container(toaster-options='{"position-class": "toast-top-full-width"}')
 
-.jumbotron
+.jumbotron.vcenter(ng-class='{ "inverse": !libraryID }')
   .container
+    div(ng-if='libraryID')
+      h1.text-center Welcome to our Library!
+      h2.text-center.text-info Please scan your Barcode ID Card to authenticate yourself
+
+    div(ng-if='!libraryID')
+      h1.text-center Please set your Library ID!
+      h2.text-center.text-info The library owner has to scan his/her Barcode ID Card
+
     form.form-horizontal(name='authentication')
-      h1.text-center Please scan your card
 
       input.form-control(type='text', name='id', required, ng-model='barcodeID', autofocus, on-focus)
-      button.btn.btn-success(type='submit', ng-click='sendBarcode()', ng-disabled='authentication.$invalid') Submit
-
-
-
-
-footer.footer
-  .container
-    p
-      | © sCOOLbry Welcome 2014
+      button.btn.btn-success(type='submit', ng-if='libraryID', ng-click='sendBarcode()', ng-disabled='authentication.$invalid') Submit
+      button.btn.btn-success(type='submit', ng-if='!libraryID', ng-click='getLibraryID()', ng-disabled='authentication.$invalid') Submit

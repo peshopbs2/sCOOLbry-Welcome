@@ -11,8 +11,4 @@ describe('Service: userPending', function () {
     userPending = _userPending_;
   }));
 
-  it('should do something', function () {
-    expect(!!userPending).toBe(true);
-  });
-
 });
