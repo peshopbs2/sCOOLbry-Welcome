@@ -5,6 +5,7 @@ angular.module('scoolbryWelcomeApp')
 
     // Get pending request
     $scope.pendings = userPending.get();
+    console.log($scope.pendings);
 
     // Clear current request and set to default
     var returnToHomepage = function() {
@@ -41,12 +42,15 @@ angular.module('scoolbryWelcomeApp')
     $scope.readings = [];
 
     for(var i=0; i<$scope.pendings.length; i++) {
-      if($scope.pendings[i].type === 'booking') {
-        $scope.pendings[i].book.end = $scope.pendings[i].end;
-        $scope.bookings.push($scope.pendings[i].book);
-      } else if($scope.pendings[i].type === 'reading') {
-        $scope.pendings[i].book.end = $scope.pendings[i].end;
-        $scope.readings.push($scope.pendings[i].book);
+
+      if($scope.pendings[i].book !== null) {
+        if($scope.pendings[i].type === 'booking') {
+          $scope.pendings[i].book.end = $scope.pendings[i].end;
+          $scope.bookings.push($scope.pendings[i].book);
+        } else if($scope.pendings[i].type === 'reading') {
+          $scope.pendings[i].book.end = $scope.pendings[i].end;
+          $scope.readings.push($scope.pendings[i].book);
+        }
       }
     }
 
