@@ -48,7 +48,7 @@ angular.module('scoolbryWelcomeApp')
   // Get user current interactions
   $scope.sendBarcode = function() {
 
-    var url = 'http://www.scoolbry.com/api/library/pending/' + $scope.libraryID + '/' + $scope.barcodeID;
+    var url = 'http://www.scoolbry.com/api/library/pending/' + $scope.barcodeID + '/' + $scope.libraryID;
 
     toaster.clear();    
     toaster.pop('info', 'Loading...');
