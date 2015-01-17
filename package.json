@@ -59,7 +59,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "node server/app.js"
+    "start": "node server/app.js",
+    "postinstall": "bower install && grunt build"
   },
   "private": true
 }
