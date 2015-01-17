@@ -52,7 +52,6 @@
     "grunt-open": "~0.2.3",
     "open": "~0.0.4",
     "jshint-stylish": "~0.1.5",
-    // "connect-livereload": "~0.4.0",
     "requirejs": "~2.1.11",
     "supertest": "~0.11.0",
     "should": "~3.3.1"
